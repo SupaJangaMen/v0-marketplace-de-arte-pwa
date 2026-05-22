@@ -71,7 +71,7 @@ export function HeroSection() {
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="border-border hover:bg-secondary gap-2 h-12 px-6">
+              <Button variant="outline" size="lg" className="border-border hover:bg-muted-foreground/10 gap-2 h-12 px-6">
                 <Play className="w-4 h-4" />
                 Ver Como Funciona
               </Button>

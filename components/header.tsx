@@ -51,7 +51,7 @@ export function Header() {
                 <ShoppingBag className="w-5 h-5" />
               </Button>
               <Link href="/entrar">
-                <Button variant="outline" className="border-border hover:bg-secondary">
+                <Button variant="outline" className="border-border hover:bg-muted-foreground/10">
                   Entrar
                 </Button>
               </Link>
