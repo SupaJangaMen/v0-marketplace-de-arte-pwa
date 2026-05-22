@@ -1,12 +1,13 @@
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import { useState, useEffect } from 'react'
 import { Search, Menu, ShoppingBag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 const navLinks = [
-  { href: '/explorar?tipo=artistas', label: 'Artistas' },
+  { href: '/explorar', label: 'Artistas' },
   { href: '/explorar?tipo=equipamentos', label: 'Equipamentos' },
   { href: '/explorar?tipo=servicos', label: 'Serviços' },
   { href: '/sobre', label: 'Sobre' },
@@ -16,6 +17,7 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
+  const [pathname] = useLocation()
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
@@ -36,16 +38,35 @@ export function Header() {
             </Link>
 
             <nav className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-medium rounded-lg hover:bg-muted/50">{link.label}</Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href.split('?')[0]))
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={cn(
+                      'px-4 py-2 text-sm font-medium rounded-lg transition-colors',
+                      isActive
+                        ? 'text-primary bg-primary/10'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              })}
             </nav>
 
             <div className="hidden lg:flex items-center gap-2">
               <div className="relative">
                 {showSearch ? (
                   <div className="flex items-center gap-2 animate-fade-in">
-                    <Input placeholder="Buscar artistas, serviços..." className="w-64 h-9 bg-muted/50 border-border/50 focus:border-primary/50 text-sm" autoFocus onBlur={() => setShowSearch(false)} />
+                    <Input
+                      placeholder="Buscar artistas, serviços..."
+                      className="w-64 h-9 bg-muted/50 border-border/50 focus:border-primary/50 text-sm"
+                      autoFocus
+                      onBlur={() => setShowSearch(false)}
+                    />
                   </div>
                 ) : (
                   <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted/50 h-9 w-9" onClick={() => setShowSearch(true)}>
@@ -53,9 +74,11 @@ export function Header() {
                   </Button>
                 )}
               </div>
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground hover:bg-muted/50 h-9 w-9">
-                <ShoppingBag className="w-[18px] h-[18px]" />
-              </Button>
+              <Link href="/mensagens">
+                <Button variant="ghost" size="icon" className={cn('h-9 w-9', pathname === '/mensagens' ? 'text-primary bg-primary/10' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50')}>
+                  <ShoppingBag className="w-[18px] h-[18px]" />
+                </Button>
+              </Link>
               <div className="w-px h-6 bg-border/50 mx-1" />
               <Link href="/entrar">
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground hover:bg-muted/50 h-9 px-4 text-sm font-medium">Entrar</Button>
@@ -85,6 +108,7 @@ export function Header() {
                       {navLinks.map((link) => (
                         <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-muted/50">{link.label}</Link>
                       ))}
+                      <Link href="/mensagens" onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-muted/50">Mensagens</Link>
                     </nav>
                     <div className="mt-auto p-6 border-t border-border/50 flex flex-col gap-3">
                       <Link href="/entrar" onClick={() => setIsOpen(false)}>

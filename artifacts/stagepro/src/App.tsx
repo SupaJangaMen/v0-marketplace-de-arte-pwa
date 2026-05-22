@@ -8,6 +8,8 @@ import ExplorarPage from "@/pages/explorar";
 import EntrarPage from "@/pages/entrar";
 import CadastrarPage from "@/pages/cadastrar";
 import ServicoPage from "@/pages/servico";
+import SobrePage from "@/pages/sobre";
+import MensagensPage from "@/pages/mensagens";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +21,8 @@ function Router() {
       <Route path="/entrar" component={EntrarPage} />
       <Route path="/cadastrar" component={CadastrarPage} />
       <Route path="/servico/:id" component={ServicoPage} />
+      <Route path="/sobre" component={SobrePage} />
+      <Route path="/mensagens" component={MensagensPage} />
       <Route component={NotFound} />
     </Switch>
   );

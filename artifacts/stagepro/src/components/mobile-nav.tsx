@@ -21,7 +21,14 @@ export function MobileNav() {
             const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))
             const Icon = item.icon
             return (
-              <Link key={item.href} href={item.href} className={cn('flex flex-col items-center justify-center gap-1 w-16 h-full transition-colors', isActive ? 'text-primary' : 'text-muted-foreground')}>
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'flex flex-col items-center justify-center gap-1 w-16 h-full transition-colors',
+                  isActive ? 'text-primary' : 'text-muted-foreground'
+                )}
+              >
                 <Icon className="w-5 h-5" />
                 <span className="text-[10px] font-medium">{item.label}</span>
               </Link>
