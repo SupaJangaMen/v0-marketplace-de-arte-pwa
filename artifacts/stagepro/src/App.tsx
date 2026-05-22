@@ -10,6 +10,7 @@ import CadastrarPage from "@/pages/cadastrar";
 import ServicoPage from "@/pages/servico";
 import SobrePage from "@/pages/sobre";
 import MensagensPage from "@/pages/mensagens";
+import AnunciarPage from "@/pages/anunciar";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/servico/:id" component={ServicoPage} />
       <Route path="/sobre" component={SobrePage} />
       <Route path="/mensagens" component={MensagensPage} />
+      <Route path="/anunciar" component={AnunciarPage} />
       <Route component={NotFound} />
     </Switch>
   );
