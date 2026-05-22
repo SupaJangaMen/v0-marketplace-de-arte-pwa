@@ -1,5 +1,5 @@
 import { Link } from 'wouter'
-import { Heart, Users, Globe, Award, Rocket, Shield, Zap, ArrowRight, Star, CheckCircle } from 'lucide-react'
+import { Heart, Globe, Rocket, Shield, Zap, ArrowRight, Star, CheckCircle } from 'lucide-react'
 import { Header } from '@/components/header'
 import { MobileNav } from '@/components/mobile-nav'
 import { Footer } from '@/components/footer'
@@ -36,50 +36,6 @@ const values = [
   },
 ]
 
-const team = [
-  {
-    name: 'Lucas Ferreira',
-    role: 'CEO & Co-fundador',
-    bio: 'Ex-produtor musical com 10 anos de experiência em grandes festivais. Fundou a Stage para resolver os problemas que viveu na prática.',
-    avatar: 'https://i.pravatar.cc/120?img=15',
-    linkedin: '#',
-  },
-  {
-    name: 'Camila Rocha',
-    role: 'COO & Co-fundadora',
-    bio: 'Especialista em gestão de eventos e ex-diretora de marketing de uma das maiores casas de shows do Sudeste.',
-    avatar: 'https://i.pravatar.cc/120?img=20',
-    linkedin: '#',
-  },
-  {
-    name: 'Rafael Mendes',
-    role: 'CTO',
-    bio: 'Engenheiro de software apaixonado por música. Já construiu plataformas para mais de 5 milhões de usuários.',
-    avatar: 'https://i.pravatar.cc/120?img=53',
-    linkedin: '#',
-  },
-  {
-    name: 'Beatriz Alves',
-    role: 'Head de Artistas',
-    bio: 'Cantora e produtora, cuida pessoalmente da experiência dos artistas na plataforma e garante que cada talento seja valorizado.',
-    avatar: 'https://i.pravatar.cc/120?img=47',
-    linkedin: '#',
-  },
-  {
-    name: 'Thiago Nunes',
-    role: 'Head de Produto',
-    bio: 'Designer de produto com passagem por grandes startups. Obcecado em criar experiências que as pessoas amam usar.',
-    avatar: 'https://i.pravatar.cc/120?img=60',
-    linkedin: '#',
-  },
-  {
-    name: 'Mariana Costa',
-    role: 'Head de Comunidade',
-    bio: 'Gestora cultural e fotógrafa. Construiu a comunidade Stage do zero e hoje cuida de mais de 2.500 artistas cadastrados.',
-    avatar: 'https://i.pravatar.cc/120?img=44',
-    linkedin: '#',
-  },
-]
 
 const milestones = [
   { year: '2021', event: 'Stage é fundada em São Paulo com 15 artistas cadastrados' },
@@ -238,31 +194,6 @@ export default function SobrePage() {
                   </div>
                 )
               })}
-            </div>
-          </div>
-        </section>
-
-        {/* Team */}
-        <section className="py-24 bg-gradient-to-b from-muted/30 to-muted/50">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">Time</span>
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 text-balance">Conheça quem faz a Stage acontecer</h2>
-              <p className="text-muted-foreground text-lg">Um time multidisciplinar unido pela paixão por arte, tecnologia e um Brasil mais cultural.</p>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {team.map((member) => (
-                <div key={member.name} className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors group">
-                  <div className="flex items-start gap-4 mb-4">
-                    <img src={member.avatar} alt={member.name} className="w-16 h-16 rounded-xl object-cover" />
-                    <div>
-                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">{member.name}</h3>
-                      <p className="text-sm text-primary">{member.role}</p>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{member.bio}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
