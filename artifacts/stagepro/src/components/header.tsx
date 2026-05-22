@@ -75,6 +75,9 @@ export function Header() {
                   <ShoppingBag className="w-[18px] h-[18px]" />
                 </Button>
               </Link>
+              <Link href="/anunciar">
+                <Button variant="outline" size="sm" className={cn('h-9 px-4 text-sm font-medium border-primary/40 text-primary hover:bg-primary/10', pathname === '/anunciar' && 'bg-primary/10')}>Anunciar</Button>
+              </Link>
               <div className="w-px h-6 bg-border/50 mx-1" />
               <Link href="/entrar">
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground hover:bg-muted/50 h-9 px-4 text-sm font-medium">Entrar</Button>
@@ -107,6 +110,9 @@ export function Header() {
                       <Link href="/mensagens" onClick={() => setIsOpen(false)} className="text-base font-medium text-foreground hover:text-primary transition-colors py-3 px-4 rounded-lg hover:bg-muted/50">Mensagens</Link>
                     </nav>
                     <div className="mt-auto p-6 border-t border-border/50 flex flex-col gap-3">
+                      <Link href="/anunciar" onClick={() => setIsOpen(false)}>
+                        <Button variant="outline" className="w-full h-11 border-primary/40 text-primary hover:bg-primary/10">Anunciar</Button>
+                      </Link>
                       <Link href="/entrar" onClick={() => setIsOpen(false)}>
                         <Button variant="outline" className="w-full h-11 border-border/50 hover:bg-muted/50 text-foreground">Entrar</Button>
                       </Link>
