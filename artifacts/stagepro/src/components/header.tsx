@@ -30,10 +30,8 @@ export function Header() {
       <div className={`transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-background/20' : 'bg-transparent'}`}>
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-18">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
-                <span className="text-primary-foreground font-bold text-base">S</span>
-              </div>
+            <Link href="/" className="flex items-center gap-2 group">
+              <img src="/logo.png" alt="Stage" className="h-10 w-10 rounded-lg object-cover transition-transform group-hover:scale-105" />
               <span className="text-xl font-semibold text-foreground tracking-tight">Stage</span>
             </Link>
 
@@ -100,7 +98,7 @@ export function Header() {
                   <div className="flex flex-col h-full">
                     <div className="p-6 border-b border-border/50">
                       <Link href="/" className="flex items-center gap-2.5" onClick={() => setIsOpen(false)}>
-                        <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center"><span className="text-primary-foreground font-bold text-base">S</span></div>
+                        <img src="/logo.png" alt="Stage" className="h-9 w-9 rounded-lg object-cover" />
                         <span className="text-xl font-semibold text-foreground tracking-tight">Stage</span>
                       </Link>
                     </div>

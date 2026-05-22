@@ -39,7 +39,7 @@ export function Footer() {
         <div className="py-12 lg:py-16 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center"><span className="text-primary-foreground font-bold text-sm">S</span></div>
+              <img src="/logo.png" alt="Stage" className="h-8 w-8 rounded-lg object-cover" />
               <span className="text-xl font-bold text-foreground">Stage</span>
             </Link>
             <p className="text-muted-foreground text-sm mb-6 max-w-xs">Conectando artistas, técnicos e equipamentos para criar experiências inesquecíveis.</p>
