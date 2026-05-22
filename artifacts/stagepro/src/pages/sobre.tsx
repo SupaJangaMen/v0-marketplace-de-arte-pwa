@@ -132,7 +132,7 @@ export default function SobrePage() {
                 <span className="text-primary">Brasil Inteiro</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl mx-auto">
-                A Stage nasceu em 2021 com uma missão clara: tornar a contratação de artistas e serviços culturais tão simples quanto pedir um táxi. Hoje somos o maior marketplace de artes e entretenimento do Brasil.
+                A Stage é uma plataforma criada para facilitar a contratação de serviços relacionados à arte, cultura e muito mais. Mais do que um sistema, uma rede de divulgação para os adeptos à cultura. Quem monta somos nós, mas o palco é seu!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/explorar">
@@ -172,10 +172,10 @@ export default function SobrePage() {
                   Por que a Stage existe?
                 </h2>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                  Lucas Ferreira, nosso fundador e ex-produtor musical, viveu na prática a dificuldade de encontrar e contratar talentos para eventos. Cada contratação era uma odisseia de indicações, ligações não retornadas e incertezas.
+                  A Stage é uma plataforma criada para facilitar a contratação de serviços relacionados à arte, cultura e muito mais. O sistema ajuda na divulgação de artistas e empresas prestadoras de serviços para que ganhem visibilidade e ajudem a rodar o mercado da arte no geral.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                  Em 2021, ele se juntou a Camila e Rafael para criar a solução que gostariam de ter quando eram produtores: uma plataforma transparente, segura e completa para todo o ecossistema de artes e entretenimento do Brasil.
+                  Mais do que um sistema, uma rede de divulgação para os adeptos à cultura. Quem monta somos nós, mas o palco é seu!
                 </p>
                 <div className="space-y-3">
                   {['Perfis verificados com portfólio real', 'Avaliações honestas de contratantes', 'Chat direto sem intermediários', 'Pagamento seguro e garantido'].map(item => (
