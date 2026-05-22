@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'wouter'
-import { Search, SlidersHorizontal, MapPin, Star, CheckCircle, Grid3X3, List, X } from 'lucide-react'
+import { Search, SlidersHorizontal, MapPin, Star, CheckCircle, Grid3X3, List, X, Sparkles } from 'lucide-react'
 import { Header } from '@/components/header'
 import { MobileNav } from '@/components/mobile-nav'
 import { Footer } from '@/components/footer'
@@ -12,6 +12,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
+import { AIFilter, type Service } from '@/components/ai-filter'
+import { cn } from '@/lib/utils'
 
 const categories = [
   { value: 'todos', label: 'Todas Categorias' },
@@ -30,7 +32,7 @@ const categories = [
   { value: 'palco', label: 'Palco e Estrutura' },
 ]
 
-const services = [
+const services: Service[] = [
   {
     id: 1,
     name: 'Maria Silva',
@@ -39,7 +41,8 @@ const services = [
     rating: 4.9,
     reviews: 127,
     location: 'São Paulo, SP',
-    price: 1500,
+    priceValue: 1500,
+    price: 'A partir de R$ 1.500',
     priceLabel: 'A partir de R$ 1.500',
     verified: true,
     image: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400&h=400&fit=crop',
@@ -53,7 +56,8 @@ const services = [
     rating: 4.8,
     reviews: 89,
     location: 'Rio de Janeiro, RJ',
-    price: 3000,
+    priceValue: 3000,
+    price: 'A partir de R$ 3.000',
     priceLabel: 'A partir de R$ 3.000',
     verified: true,
     image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=400&fit=crop',
@@ -67,7 +71,8 @@ const services = [
     rating: 5.0,
     reviews: 56,
     location: 'Belo Horizonte, MG',
-    price: 5000,
+    priceValue: 5000,
+    price: 'Sob consulta',
     priceLabel: 'Sob consulta',
     verified: true,
     image: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=400&h=400&fit=crop',
@@ -81,7 +86,8 @@ const services = [
     rating: 4.7,
     reviews: 203,
     location: 'Curitiba, PR',
-    price: 800,
+    priceValue: 800,
+    price: 'A partir de R$ 800',
     priceLabel: 'A partir de R$ 800',
     verified: true,
     image: 'https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=400&h=400&fit=crop',
@@ -95,7 +101,8 @@ const services = [
     rating: 4.9,
     reviews: 178,
     location: 'Salvador, BA',
-    price: 2000,
+    priceValue: 2000,
+    price: 'A partir de R$ 2.000',
     priceLabel: 'A partir de R$ 2.000',
     verified: true,
     image: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=400&h=400&fit=crop',
@@ -109,7 +116,8 @@ const services = [
     rating: 4.8,
     reviews: 67,
     location: 'São Paulo, SP',
-    price: 4000,
+    priceValue: 4000,
+    price: 'Sob consulta',
     priceLabel: 'Sob consulta',
     verified: true,
     image: 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=400&h=400&fit=crop',
@@ -123,7 +131,8 @@ const services = [
     rating: 4.6,
     reviews: 145,
     location: 'Porto Alegre, RS',
-    price: 2500,
+    priceValue: 2500,
+    price: 'A partir de R$ 2.500',
     priceLabel: 'A partir de R$ 2.500',
     verified: true,
     image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop',
@@ -137,7 +146,8 @@ const services = [
     rating: 4.9,
     reviews: 234,
     location: 'São Paulo, SP',
-    price: 8000,
+    priceValue: 8000,
+    price: 'A partir de R$ 8.000',
     priceLabel: 'A partir de R$ 8.000',
     verified: true,
     image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=400&h=400&fit=crop',
@@ -151,7 +161,8 @@ const services = [
     rating: 5.0,
     reviews: 45,
     location: 'Recife, PE',
-    price: 1200,
+    priceValue: 1200,
+    price: 'A partir de R$ 1.200',
     priceLabel: 'A partir de R$ 1.200',
     verified: true,
     image: 'https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=400&h=400&fit=crop',
@@ -168,25 +179,42 @@ export default function ExplorarPage() {
   const [sortBy, setSortBy] = useState('relevancia')
   const [isFilterOpen, setIsFilterOpen] = useState(false)
 
+  const [aiFilterResult, setAiFilterResult] = useState<{
+    matchedIds: number[]
+    highlights: Record<number, string>
+  } | null>(null)
+  const [isAiFiltering, setIsAiFiltering] = useState(false)
+
   const filteredServices = services.filter((service) => {
-    const matchesSearch = service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    if (aiFilterResult) {
+      return aiFilterResult.matchedIds.includes(service.id)
+    }
+    const matchesSearch =
+      service.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       service.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
       service.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-    const matchesCategory = selectedCategory === 'todos' || service.category.toLowerCase().includes(selectedCategory)
-    const matchesPrice = service.price >= priceRange[0] && service.price <= priceRange[1]
+    const matchesCategory =
+      selectedCategory === 'todos' || service.category.toLowerCase().includes(selectedCategory)
+    const matchesPrice =
+      (service.priceValue ?? 0) >= priceRange[0] && (service.priceValue ?? 0) <= priceRange[1]
     const matchesVerified = !showVerifiedOnly || service.verified
     return matchesSearch && matchesCategory && matchesPrice && matchesVerified
   })
 
-  const sortedServices = [...filteredServices].sort((a, b) => {
-    switch (sortBy) {
-      case 'preco-menor': return a.price - b.price
-      case 'preco-maior': return b.price - a.price
-      case 'avaliacao': return b.rating - a.rating
-      case 'reviews': return b.reviews - a.reviews
-      default: return 0
-    }
-  })
+  const sortedServices = aiFilterResult
+    ? [...filteredServices].sort(
+        (a, b) =>
+          (aiFilterResult.matchedIds.indexOf(a.id)) - (aiFilterResult.matchedIds.indexOf(b.id))
+      )
+    : [...filteredServices].sort((a, b) => {
+        switch (sortBy) {
+          case 'preco-menor': return (a.priceValue ?? 0) - (b.priceValue ?? 0)
+          case 'preco-maior': return (b.priceValue ?? 0) - (a.priceValue ?? 0)
+          case 'avaliacao': return b.rating - a.rating
+          case 'reviews': return b.reviews - a.reviews
+          default: return 0
+        }
+      })
 
   const FilterContent = () => (
     <div className="space-y-6">
@@ -221,97 +249,272 @@ export default function ExplorarPage() {
       <Header />
       <main className="pt-20 lg:pt-24 pb-24 lg:pb-12">
         <div className="container mx-auto px-4 lg:px-8">
+
           <div className="mb-8">
             <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-2">Explorar Marketplace</h1>
             <p className="text-muted-foreground">Encontre artistas, equipamentos e serviços para seu evento</p>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-4 mb-8">
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input type="text" placeholder="Buscar artistas, equipamentos, serviços..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-12 h-12 bg-card border-border" />
-            </div>
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-full lg:w-48 h-12 bg-card border-border"><SelectValue placeholder="Categoria" /></SelectTrigger>
-              <SelectContent>{categories.map((cat) => <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>)}</SelectContent>
-            </Select>
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-full lg:w-48 h-12 bg-card border-border"><SelectValue placeholder="Ordenar por" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="relevancia">Relevância</SelectItem>
-                <SelectItem value="avaliacao">Melhor avaliação</SelectItem>
-                <SelectItem value="preco-menor">Menor preço</SelectItem>
-                <SelectItem value="preco-maior">Maior preço</SelectItem>
-                <SelectItem value="reviews">Mais avaliações</SelectItem>
-              </SelectContent>
-            </Select>
-            <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-              <SheetTrigger asChild className="lg:hidden">
-                <Button variant="outline" className="h-12 border-border"><SlidersHorizontal className="w-5 h-5 mr-2" />Filtros</Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-80 bg-background border-border">
-                <SheetHeader><SheetTitle>Filtros</SheetTitle></SheetHeader>
-                <div className="mt-6"><FilterContent /></div>
-                <div className="mt-8"><Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => setIsFilterOpen(false)}>Aplicar Filtros</Button></div>
-              </SheetContent>
-            </Sheet>
-            <div className="hidden lg:flex items-center gap-1 bg-card border border-border rounded-lg p-1">
-              <Button variant={viewMode === 'grid' ? 'default' : 'ghost'} size="icon" className={viewMode === 'grid' ? 'bg-primary text-primary-foreground' : ''} onClick={() => setViewMode('grid')}><Grid3X3 className="w-4 h-4" /></Button>
-              <Button variant={viewMode === 'list' ? 'default' : 'ghost'} size="icon" className={viewMode === 'list' ? 'bg-primary text-primary-foreground' : ''} onClick={() => setViewMode('list')}><List className="w-4 h-4" /></Button>
-            </div>
-          </div>
+          {/* AI Filter */}
+          <AIFilter
+            services={services}
+            onFilter={(result) => {
+              setAiFilterResult(result)
+            }}
+            isFiltering={isAiFiltering}
+            setIsFiltering={setIsAiFiltering}
+          />
 
-          {(selectedCategory !== 'todos' || showVerifiedOnly || searchQuery) && (
-            <div className="flex flex-wrap gap-2 mb-6">
-              {selectedCategory !== 'todos' && (
-                <Badge variant="secondary" className="gap-1">{categories.find(c => c.value === selectedCategory)?.label}<X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedCategory('todos')} /></Badge>
-              )}
-              {showVerifiedOnly && <Badge variant="secondary" className="gap-1">Verificados<X className="w-3 h-3 cursor-pointer" onClick={() => setShowVerifiedOnly(false)} /></Badge>}
-              {searchQuery && <Badge variant="secondary" className="gap-1">{`"${searchQuery}"`}<X className="w-3 h-3 cursor-pointer" onClick={() => setSearchQuery('')} /></Badge>}
+          {/* Standard search bar — hidden during AI filter active state */}
+          {!aiFilterResult && !isAiFiltering && (
+            <div className="flex flex-col lg:flex-row gap-4 mb-8">
+              <div className="relative flex-1">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Buscar artistas, equipamentos, serviços..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-12 h-12 bg-card border-border"
+                />
+              </div>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full lg:w-48 h-12 bg-card border-border">
+                  <SelectValue placeholder="Categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((cat) => (
+                    <SelectItem key={cat.value} value={cat.value}>{cat.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-full lg:w-48 h-12 bg-card border-border">
+                  <SelectValue placeholder="Ordenar por" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="relevancia">Relevância</SelectItem>
+                  <SelectItem value="avaliacao">Melhor avaliação</SelectItem>
+                  <SelectItem value="preco-menor">Menor preço</SelectItem>
+                  <SelectItem value="preco-maior">Maior preço</SelectItem>
+                  <SelectItem value="reviews">Mais avaliações</SelectItem>
+                </SelectContent>
+              </Select>
+              <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+                <SheetTrigger asChild className="lg:hidden">
+                  <Button variant="outline" className="h-12 border-border">
+                    <SlidersHorizontal className="w-5 h-5 mr-2" />Filtros
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-80 bg-background border-border">
+                  <SheetHeader><SheetTitle>Filtros</SheetTitle></SheetHeader>
+                  <div className="mt-6"><FilterContent /></div>
+                  <div className="mt-8">
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => setIsFilterOpen(false)}>Aplicar Filtros</Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+              <div className="hidden lg:flex items-center gap-1 bg-card border border-border rounded-lg p-1">
+                <Button
+                  variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                  size="icon"
+                  className={viewMode === 'grid' ? 'bg-primary text-primary-foreground' : ''}
+                  onClick={() => setViewMode('grid')}
+                >
+                  <Grid3X3 className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={viewMode === 'list' ? 'default' : 'ghost'}
+                  size="icon"
+                  className={viewMode === 'list' ? 'bg-primary text-primary-foreground' : ''}
+                  onClick={() => setViewMode('list')}
+                >
+                  <List className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           )}
 
+          {/* Active filter chips */}
+          {!aiFilterResult && (selectedCategory !== 'todos' || showVerifiedOnly || searchQuery) && (
+            <div className="flex flex-wrap gap-2 mb-6">
+              {selectedCategory !== 'todos' && (
+                <Badge variant="secondary" className="gap-1">
+                  {categories.find(c => c.value === selectedCategory)?.label}
+                  <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedCategory('todos')} />
+                </Badge>
+              )}
+              {showVerifiedOnly && (
+                <Badge variant="secondary" className="gap-1">
+                  Verificados<X className="w-3 h-3 cursor-pointer" onClick={() => setShowVerifiedOnly(false)} />
+                </Badge>
+              )}
+              {searchQuery && (
+                <Badge variant="secondary" className="gap-1">
+                  {`"${searchQuery}"`}<X className="w-3 h-3 cursor-pointer" onClick={() => setSearchQuery('')} />
+                </Badge>
+              )}
+            </div>
+          )}
+
+          {/* Layout */}
           <div className="flex gap-8">
-            <aside className="hidden lg:block w-64 shrink-0">
-              <div className="bg-card border border-border rounded-xl p-6 sticky top-28">
-                <h3 className="font-semibold text-foreground mb-6">Filtros</h3>
-                <FilterContent />
+            {/* Sidebar — hidden during AI filter */}
+            {!aiFilterResult && (
+              <aside className="hidden lg:block w-64 shrink-0">
+                <div className="bg-card border border-border rounded-xl p-6 sticky top-28">
+                  <h3 className="font-semibold text-foreground mb-6">Filtros</h3>
+                  <FilterContent />
+                </div>
+              </aside>
+            )}
+
+            <div className="flex-1 min-w-0">
+              {/* Result count */}
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-sm text-muted-foreground">
+                  {isAiFiltering ? (
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin inline-block" />
+                      Analisando com IA...
+                    </span>
+                  ) : (
+                    <>
+                      {sortedServices.length} resultado{sortedServices.length !== 1 ? 's' : ''} encontrado{sortedServices.length !== 1 ? 's' : ''}
+                      {aiFilterResult && (
+                        <span className="ml-2 inline-flex items-center gap-1 text-primary">
+                          <Sparkles className="w-3 h-3" />filtrado por IA
+                        </span>
+                      )}
+                    </>
+                  )}
+                </p>
+                {aiFilterResult && (
+                  <div className="flex items-center gap-1 bg-card border border-border rounded-lg p-1">
+                    <Button
+                      variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                      size="icon"
+                      className={viewMode === 'grid' ? 'bg-primary text-primary-foreground' : ''}
+                      onClick={() => setViewMode('grid')}
+                    >
+                      <Grid3X3 className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant={viewMode === 'list' ? 'default' : 'ghost'}
+                      size="icon"
+                      className={viewMode === 'list' ? 'bg-primary text-primary-foreground' : ''}
+                      onClick={() => setViewMode('list')}
+                    >
+                      <List className="w-4 h-4" />
+                    </Button>
+                  </div>
+                )}
               </div>
-            </aside>
-            <div className="flex-1">
-              <p className="text-sm text-muted-foreground mb-4">{sortedServices.length} resultado{sortedServices.length !== 1 ? 's' : ''} encontrado{sortedServices.length !== 1 ? 's' : ''}</p>
+
+              {/* Cards */}
               <div className={viewMode === 'grid' ? 'grid md:grid-cols-2 xl:grid-cols-3 gap-6' : 'flex flex-col gap-4'}>
-                {sortedServices.map((service) => (
-                  <Link key={service.id} href={`/servico/${service.id}`} className={`group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 ${viewMode === 'list' ? 'flex' : ''}`}>
-                    <div className={`relative overflow-hidden ${viewMode === 'list' ? 'w-40 h-40 shrink-0' : 'aspect-[4/3]'}`}>
-                      <img src={service.image} alt={service.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      <div className="absolute top-3 left-3"><Badge className="bg-background/90 text-foreground backdrop-blur-sm">{service.category}</Badge></div>
-                      {service.verified && <div className="absolute top-3 right-3"><div className="bg-primary text-primary-foreground rounded-full p-1"><CheckCircle className="w-4 h-4" /></div></div>}
-                    </div>
-                    <div className={`p-5 ${viewMode === 'list' ? 'flex-1' : ''}`}>
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <div>
-                          <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">{service.name}</h3>
-                          <p className="text-sm text-muted-foreground">{service.type}</p>
+                {sortedServices.map((service, index) => {
+                  const highlight = aiFilterResult?.highlights[service.id]
+                  return (
+                    <Link
+                      key={service.id}
+                      href={`/servico/${service.id}`}
+                      className={cn(
+                        'group bg-card border rounded-2xl overflow-hidden transition-all duration-300',
+                        viewMode === 'list' ? 'flex' : '',
+                        aiFilterResult
+                          ? 'border-primary/30 hover:border-primary/60 shadow-sm shadow-primary/5'
+                          : 'border-border hover:border-primary/50',
+                        aiFilterResult && index === 0
+                          ? 'ring-1 ring-primary/30'
+                          : ''
+                      )}
+                      style={aiFilterResult ? { animationDelay: `${index * 60}ms` } : undefined}
+                    >
+                      <div className={cn(
+                        'relative overflow-hidden',
+                        viewMode === 'list' ? 'w-40 h-40 shrink-0' : 'aspect-[4/3]'
+                      )}>
+                        <img
+                          src={service.image}
+                          alt={service.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-3 left-3">
+                          <Badge className="bg-background/90 text-foreground backdrop-blur-sm">{service.category}</Badge>
                         </div>
-                        <div className="flex items-center gap-1 bg-secondary rounded-lg px-2 py-1">
-                          <Star className="w-4 h-4 text-primary fill-primary" />
-                          <span className="text-sm font-medium">{service.rating}</span>
+                        {service.verified && (
+                          <div className="absolute top-3 right-3">
+                            <div className="bg-primary text-primary-foreground rounded-full p-1">
+                              <CheckCircle className="w-4 h-4" />
+                            </div>
+                          </div>
+                        )}
+                        {aiFilterResult && index === 0 && (
+                          <div className="absolute bottom-3 left-3">
+                            <Badge className="bg-primary text-primary-foreground gap-1 text-xs">
+                              <Sparkles className="w-3 h-3" />Melhor match
+                            </Badge>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className={cn('p-5', viewMode === 'list' ? 'flex-1' : '')}>
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <div>
+                            <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">{service.name}</h3>
+                            <p className="text-sm text-muted-foreground">{service.type}</p>
+                          </div>
+                          <div className="flex items-center gap-1 bg-secondary rounded-lg px-2 py-1 shrink-0">
+                            <Star className="w-4 h-4 text-primary fill-primary" />
+                            <span className="text-sm font-medium">{service.rating}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
+                          <MapPin className="w-4 h-4" />{service.location}
+                        </div>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {service.tags.slice(0, 3).map((tag) => (
+                            <span key={tag} className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded-md">{tag}</span>
+                          ))}
+                        </div>
+
+                        {/* AI highlight reason */}
+                        {highlight && (
+                          <div className="mb-3 flex items-start gap-1.5 text-xs text-primary bg-primary/8 border border-primary/15 rounded-lg px-3 py-2">
+                            <Sparkles className="w-3 h-3 mt-0.5 shrink-0" />
+                            <span>{highlight}</span>
+                          </div>
+                        )}
+
+                        <div className="pt-4 border-t border-border">
+                          <p className="text-sm text-muted-foreground">{service.priceLabel}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3"><MapPin className="w-4 h-4" />{service.location}</div>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {service.tags.slice(0, 3).map((tag) => <span key={tag} className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded-md">{tag}</span>)}
-                      </div>
-                      <div className="pt-4 border-t border-border"><p className="text-sm text-muted-foreground">{service.priceLabel}</p></div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  )
+                })}
               </div>
-              {sortedServices.length === 0 && (
+
+              {sortedServices.length === 0 && !isAiFiltering && (
                 <div className="text-center py-16">
-                  <p className="text-muted-foreground mb-4">Nenhum resultado encontrado</p>
-                  <Button variant="outline" onClick={() => { setSearchQuery(''); setSelectedCategory('todos'); setShowVerifiedOnly(false); setPriceRange([0, 10000]); }}>Limpar filtros</Button>
+                  <div className="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Sparkles className="w-8 h-8 text-muted-foreground" />
+                  </div>
+                  <p className="text-foreground font-medium mb-1">Nenhum resultado encontrado</p>
+                  <p className="text-muted-foreground text-sm mb-6">Tente reformular sua busca ou use outros termos</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setSearchQuery('')
+                      setSelectedCategory('todos')
+                      setShowVerifiedOnly(false)
+                      setPriceRange([0, 10000])
+                      setAiFilterResult(null)
+                    }}
+                  >
+                    Limpar filtros
+                  </Button>
                 </div>
               )}
             </div>
