@@ -7,9 +7,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
-  { href: '/explorar', label: 'Artistas' },
-  { href: '/explorar?tipo=equipamentos', label: 'Equipamentos' },
-  { href: '/explorar?tipo=servicos', label: 'Serviços' },
+  { href: '/explorar', label: 'Explorar' },
   { href: '/sobre', label: 'Sobre' },
 ]
 
