@@ -43,7 +43,7 @@ const conversations: Conversation[] = [
     unread: 2,
     online: true,
     messages: [
-      { id: 1, content: 'Olá Maria! Vi seu perfil na StagePro e adorei seu trabalho com MPB.', time: '14:30', fromMe: true, status: 'read' },
+      { id: 1, content: 'Olá Maria! Vi seu perfil na Stage e adorei seu trabalho com MPB.', time: '14:30', fromMe: true, status: 'read' },
       { id: 2, content: 'Olá! Que bom que gostou 😊 Posso te ajudar com algum evento?', time: '14:32', fromMe: false },
       { id: 3, content: 'Sim! Estou organizando um casamento para dia 15 de junho em São Paulo. Você estaria disponível?', time: '14:35', fromMe: true, status: 'read' },
       { id: 4, content: 'Deixa eu verificar minha agenda... 📅', time: '14:36', fromMe: false },

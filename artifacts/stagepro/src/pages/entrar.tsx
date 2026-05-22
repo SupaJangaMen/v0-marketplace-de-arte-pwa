@@ -28,7 +28,7 @@ export default function EntrarPage() {
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold">S</span>
             </div>
-            <span className="text-2xl font-bold text-foreground">StagePro</span>
+            <span className="text-2xl font-bold text-foreground">Stage</span>
           </Link>
           <div className="mb-8">
             <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">Bem-vindo de volta</h1>
@@ -85,7 +85,7 @@ export default function EntrarPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         <div className="absolute bottom-12 left-12 right-12">
           <blockquote className="text-foreground">
-            <p className="text-2xl font-medium mb-4">{'"O StagePro transformou a forma como encontro talentos para meus eventos. Simplesmente incrível!"'}</p>
+            <p className="text-2xl font-medium mb-4">{'"O Stage transformou a forma como encontro talentos para meus eventos. Simplesmente incrível!"'}</p>
             <footer className="text-muted-foreground">
               <strong className="text-foreground">Carlos Mendes</strong><br />
               Produtor de Eventos, São Paulo

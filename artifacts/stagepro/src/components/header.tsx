@@ -34,7 +34,7 @@ export function Header() {
               <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
                 <span className="text-primary-foreground font-bold text-base">S</span>
               </div>
-              <span className="text-xl font-semibold text-foreground tracking-tight">StagePro</span>
+              <span className="text-xl font-semibold text-foreground tracking-tight">Stage</span>
             </Link>
 
             <nav className="hidden lg:flex items-center gap-1">
@@ -101,7 +101,7 @@ export function Header() {
                     <div className="p-6 border-b border-border/50">
                       <Link href="/" className="flex items-center gap-2.5" onClick={() => setIsOpen(false)}>
                         <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center"><span className="text-primary-foreground font-bold text-base">S</span></div>
-                        <span className="text-xl font-semibold text-foreground tracking-tight">StagePro</span>
+                        <span className="text-xl font-semibold text-foreground tracking-tight">Stage</span>
                       </Link>
                     </div>
                     <nav className="flex flex-col p-4 gap-1">

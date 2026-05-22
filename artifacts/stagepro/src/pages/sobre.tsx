@@ -40,7 +40,7 @@ const team = [
   {
     name: 'Lucas Ferreira',
     role: 'CEO & Co-fundador',
-    bio: 'Ex-produtor musical com 10 anos de experiência em grandes festivais. Fundou a StagePro para resolver os problemas que viveu na prática.',
+    bio: 'Ex-produtor musical com 10 anos de experiência em grandes festivais. Fundou a Stage para resolver os problemas que viveu na prática.',
     avatar: 'https://i.pravatar.cc/120?img=15',
     linkedin: '#',
   },
@@ -75,14 +75,14 @@ const team = [
   {
     name: 'Mariana Costa',
     role: 'Head de Comunidade',
-    bio: 'Gestora cultural e fotógrafa. Construiu a comunidade StagePro do zero e hoje cuida de mais de 2.500 artistas cadastrados.',
+    bio: 'Gestora cultural e fotógrafa. Construiu a comunidade Stage do zero e hoje cuida de mais de 2.500 artistas cadastrados.',
     avatar: 'https://i.pravatar.cc/120?img=44',
     linkedin: '#',
   },
 ]
 
 const milestones = [
-  { year: '2021', event: 'StagePro é fundada em São Paulo com 15 artistas cadastrados' },
+  { year: '2021', event: 'Stage é fundada em São Paulo com 15 artistas cadastrados' },
   { year: '2022', event: 'Expansão para Rio de Janeiro e Minas Gerais. Primeiro milhão em transações.' },
   { year: '2023', event: 'Lançamento da busca por IA e expansão para todo o Brasil' },
   { year: '2024', event: 'Mais de 2.500 artistas e 15.000 eventos realizados na plataforma' },
@@ -90,7 +90,7 @@ const milestones = [
 
 const testimonials = [
   {
-    text: '"A StagePro revolucionou como faço eventos. Em minutos encontro qualquer tipo de talento que preciso — de músicos a fotógrafos profissionais."',
+    text: '"A Stage revolucionou como faço eventos. Em minutos encontro qualquer tipo de talento que preciso — de músicos a fotógrafos profissionais."',
     author: 'Patricia Lima',
     role: 'Produtora de Eventos, São Paulo',
     rating: 5,
@@ -132,7 +132,7 @@ export default function SobrePage() {
                 <span className="text-primary">Brasil Inteiro</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl mx-auto">
-                A StagePro nasceu em 2021 com uma missão clara: tornar a contratação de artistas e serviços culturais tão simples quanto pedir um táxi. Hoje somos o maior marketplace de artes e entretenimento do Brasil.
+                A Stage nasceu em 2021 com uma missão clara: tornar a contratação de artistas e serviços culturais tão simples quanto pedir um táxi. Hoje somos o maior marketplace de artes e entretenimento do Brasil.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/explorar">
@@ -169,7 +169,7 @@ export default function SobrePage() {
               <div>
                 <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">Nossa Missão</span>
                 <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-6 text-balance">
-                  Por que a StagePro existe?
+                  Por que a Stage existe?
                 </h2>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                   Lucas Ferreira, nosso fundador e ex-produtor musical, viveu na prática a dificuldade de encontrar e contratar talentos para eventos. Cada contratação era uma odisseia de indicações, ligações não retornadas e incertezas.
@@ -270,7 +270,7 @@ export default function SobrePage() {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">Time</span>
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 text-balance">Conheça quem faz a StagePro acontecer</h2>
+              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 text-balance">Conheça quem faz a Stage acontecer</h2>
               <p className="text-muted-foreground text-lg">Um time multidisciplinar unido pela paixão por arte, tecnologia e um Brasil mais cultural.</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -322,7 +322,7 @@ export default function SobrePage() {
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <Rocket className="w-12 h-12 text-primary mx-auto mb-6" />
             <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 text-balance">Faça parte dessa história</h2>
-            <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">Seja como artista ou contratante, a StagePro é o seu espaço. Cadastre-se gratuitamente e comece hoje.</p>
+            <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">Seja como artista ou contratante, a Stage é o seu espaço. Cadastre-se gratuitamente e comece hoje.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/cadastrar">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 h-12 px-8">Criar conta grátis <ArrowRight className="w-4 h-4" /></Button>

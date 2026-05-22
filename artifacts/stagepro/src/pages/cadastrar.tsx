@@ -30,7 +30,7 @@ export default function CadastrarPage() {
           </button>
           <Link href="/" className="flex items-center gap-2 mb-8">
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center"><span className="text-primary-foreground font-bold">S</span></div>
-            <span className="text-2xl font-bold text-foreground">StagePro</span>
+            <span className="text-2xl font-bold text-foreground">Stage</span>
           </Link>
           <div className="flex items-center gap-2 mb-8">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step >= 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'}`}>
@@ -152,7 +152,7 @@ export default function CadastrarPage() {
           <blockquote className="text-foreground">
             <p className="text-xl font-medium">
               {accountType === 'artista'
-                ? '"Aumentei minha visibilidade e fechei 3x mais contratos depois de me cadastrar no StagePro."'
+                ? '"Aumentei minha visibilidade e fechei 3x mais contratos depois de me cadastrar no Stage."'
                 : '"Encontrar o DJ perfeito para meu evento nunca foi tão fácil. Recomendo!"'}
             </p>
           </blockquote>

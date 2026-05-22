@@ -40,7 +40,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center"><span className="text-primary-foreground font-bold text-sm">S</span></div>
-              <span className="text-xl font-bold text-foreground">StagePro</span>
+              <span className="text-xl font-bold text-foreground">Stage</span>
             </Link>
             <p className="text-muted-foreground text-sm mb-6 max-w-xs">Conectando artistas, técnicos e equipamentos para criar experiências inesquecíveis.</p>
             <div className="flex gap-3">
@@ -77,7 +77,7 @@ export function Footer() {
           </div>
         </div>
         <div className="py-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">© 2024 StagePro. Todos os direitos reservados.</p>
+          <p className="text-sm text-muted-foreground">© 2024 Stage. Todos os direitos reservados.</p>
           <div className="flex gap-6">
             <Link href="/termos" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Termos</Link>
             <Link href="/privacidade" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacidade</Link>
