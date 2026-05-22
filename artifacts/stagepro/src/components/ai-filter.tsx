@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Sparkles, Send, X, Loader2, KeyRound, ChevronDown, ChevronUp, Lightbulb } from 'lucide-react'
+import { Sparkles, Send, X, Loader2, ChevronDown, ChevronUp, Lightbulb } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
@@ -26,8 +26,6 @@ interface AIFilterResult {
   reasoning: string
   highlights: Record<number, string>
 }
-
-const DEMO_API_KEY_ENV = 'VITE_OPENAI_API_KEY'
 
 const suggestions = [
   'Músicos para casamento em São Paulo com boa avaliação',
@@ -170,7 +168,6 @@ export function AIFilter({ services, onFilter, isFiltering, setIsFiltering }: AI
   const [reasoning, setReasoning] = useState('')
   const [showReasoning, setShowReasoning] = useState(true)
   const [isActive, setIsActive] = useState(false)
-  const [showApiKeyInfo, setShowApiKeyInfo] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleSubmit = async () => {
@@ -232,23 +229,7 @@ export function AIFilter({ services, onFilter, isFiltering, setIsFiltering }: AI
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-sm font-semibold text-foreground">Busca com Inteligência Artificial</span>
                 <Badge variant="outline" className="text-[10px] h-4 px-1.5 border-amber-500/50 text-amber-500 bg-amber-500/10 font-medium">DEMO</Badge>
-                <button
-                  onClick={() => setShowApiKeyInfo(!showApiKeyInfo)}
-                  className="ml-auto flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <KeyRound className="w-3 h-3" />
-                  <span className="hidden sm:inline">Ativar com API Key</span>
-                </button>
               </div>
-
-              {showApiKeyInfo && (
-                <div className="mb-3 p-3 rounded-xl bg-muted/50 border border-border/50 text-xs text-muted-foreground leading-relaxed">
-                  <p className="font-medium text-foreground mb-1">Como ativar o AI real</p>
-                  <p>Adicione sua chave da OpenAI como variável de ambiente:</p>
-                  <code className="block mt-1 bg-background rounded px-2 py-1 text-primary font-mono">{DEMO_API_KEY_ENV}=sk-...</code>
-                  <p className="mt-1">O filtro usará <strong>gpt-4o-mini</strong> para entender sua busca com linguagem natural avançada.</p>
-                </div>
-              )}
 
               <Textarea
                 ref={textareaRef}
