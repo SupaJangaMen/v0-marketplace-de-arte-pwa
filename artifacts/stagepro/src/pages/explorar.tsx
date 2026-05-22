@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'wouter'
+import { useState, useEffect } from 'react'
+import { Link, useSearch } from 'wouter'
 import {
   Search, SlidersHorizontal, MapPin, Star, CheckCircle,
   Grid3X3, List, X, Sparkles, Mic2, Zap, Camera, Users,
@@ -314,8 +314,12 @@ function countForCategory(cat: typeof categories[0]) {
 }
 
 export default function ExplorarPage() {
+  const search = useSearch()
+  const initialCategory = new URLSearchParams(search).get('categoria') ?? 'todos'
   const [searchQuery, setSearchQuery]     = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('todos')
+  const [selectedCategory, setSelectedCategory] = useState(
+    categories.some(c => c.value === initialCategory) ? initialCategory : 'todos'
+  )
   const [viewMode, setViewMode]           = useState<'grid' | 'list'>('grid')
   const [priceRange, setPriceRange]       = useState([0, 10000])
   const [showVerifiedOnly, setShowVerifiedOnly] = useState(false)
