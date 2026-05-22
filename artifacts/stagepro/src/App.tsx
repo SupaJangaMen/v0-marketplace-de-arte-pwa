@@ -11,6 +11,7 @@ import ServicoPage from "@/pages/servico";
 import SobrePage from "@/pages/sobre";
 import MensagensPage from "@/pages/mensagens";
 import AnunciarPage from "@/pages/anunciar";
+import PerfilPage from "@/pages/perfil";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/sobre" component={SobrePage} />
       <Route path="/mensagens" component={MensagensPage} />
       <Route path="/anunciar" component={AnunciarPage} />
+      <Route path="/perfil" component={PerfilPage} />
       <Route component={NotFound} />
     </Switch>
   );

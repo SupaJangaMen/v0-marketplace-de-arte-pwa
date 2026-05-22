@@ -1,19 +1,33 @@
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import { useState } from 'react'
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
+import { setAuthUser } from '@/lib/auth'
 
 export default function EntrarPage() {
+  const [, navigate] = useLocation()
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setTimeout(() => { setIsLoading(false) }, 1500)
+    await new Promise(r => setTimeout(r, 1200))
+    setAuthUser({
+      name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+      email,
+      avatar: `https://i.pravatar.cc/200?u=${email}`,
+      type: 'artist',
+      location: 'São Paulo, SP',
+      bio: 'Apaixonado por arte e cultura. Conectando talentos ao Brasil.',
+      joinedAt: new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }),
+    })
+    setIsLoading(false)
+    navigate('/perfil')
   }
 
   return (
@@ -25,9 +39,7 @@ export default function EntrarPage() {
             Voltar ao início
           </Link>
           <Link href="/" className="flex items-center gap-2 mb-8">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold">S</span>
-            </div>
+            <img src="/logo.png" alt="Stage" className="h-10 w-10 rounded-lg object-cover" />
             <span className="text-2xl font-bold text-foreground">Stage</span>
           </Link>
           <div className="mb-8">
@@ -37,7 +49,7 @@ export default function EntrarPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="seu@email.com" className="mt-2 h-12 bg-card border-border" required />
+              <Input id="email" type="email" placeholder="seu@email.com" className="mt-2 h-12 bg-card border-border" required value={email} onChange={e => setEmail(e.target.value)} />
             </div>
             <div>
               <div className="flex items-center justify-between mb-2">
