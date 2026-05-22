@@ -31,12 +31,7 @@ export function HeroSection() {
             {/* Inner ring */}
             <div className="absolute inset-16 rounded-full border border-primary/20" />
             
-            {/* Center play button */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <button className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-primary flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-primary/30">
-                <Play className="w-6 h-6 lg:w-8 lg:h-8 text-primary-foreground fill-current ml-1" />
-              </button>
-            </div>
+
           </div>
         </div>
       </div>
