@@ -27,13 +27,13 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 safe-area-top">
       <div className={`transition-all duration-300 ${isScrolled ? 'bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-background/20' : 'bg-transparent'}`}>
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-18">
+          <div className="relative flex items-center justify-between h-16 lg:h-18">
             <Link href="/" className="flex items-center gap-2 group">
               <img src="/logo.png" alt="Stage" className="h-10 w-10 rounded-lg object-cover transition-transform group-hover:scale-105" />
               <span className="text-xl font-semibold text-foreground tracking-tight">Stage</span>
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-1">
+            <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href.split('?')[0]))
                 return (
