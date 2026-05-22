@@ -242,29 +242,6 @@ export default function SobrePage() {
           </div>
         </section>
 
-        {/* Timeline */}
-        <section className="py-24 lg:py-32">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="text-center max-w-xl mx-auto mb-16">
-              <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">Trajetória</span>
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">Nossa jornada</h2>
-            </div>
-            <div className="max-w-2xl mx-auto space-y-0">
-              {milestones.map((m, i) => (
-                <div key={m.year} className="flex gap-6">
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm shrink-0">{m.year}</div>
-                    {i < milestones.length - 1 && <div className="w-0.5 bg-border flex-1 mt-2 mb-0" style={{ minHeight: '40px' }} />}
-                  </div>
-                  <div className={`pb-10 ${i < milestones.length - 1 ? '' : ''}`}>
-                    <p className="text-foreground leading-relaxed pt-3">{m.event}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Team */}
         <section className="py-24 bg-gradient-to-b from-muted/30 to-muted/50">
           <div className="container mx-auto px-4 lg:px-8">
