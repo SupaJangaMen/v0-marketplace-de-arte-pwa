@@ -1,77 +1,90 @@
-import Link from 'next/link'
-import { ArrowRight, Play, Star, Mic2, Lightbulb, Speaker, Camera, Palette, Theater } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+'use client'
 
-const floatingCards = [
-  { icon: Mic2, label: 'Cantores', count: '847 disponíveis', delay: '0s' },
-  { icon: Lightbulb, label: 'Iluminação', count: '456 serviços', delay: '0.5s' },
-  { icon: Speaker, label: 'Equipamentos', count: '2.3k listados', delay: '1s' },
+import Link from 'next/link'
+import { ArrowRight, Play, Star, Mic2, Lightbulb, Speaker } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { useEffect, useState } from 'react'
+
+const stats = [
+  { value: '15k+', label: 'Eventos Realizados' },
+  { value: '98%', label: 'Satisfação' },
+  { value: '500+', label: 'Cidades' },
 ]
 
 export function HeroSection() {
-  return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20 lg:pt-0">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Gradient circles */}
-        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-primary/5 blur-3xl" />
-        
-        {/* Circular decoration */}
-        <div className="absolute top-1/2 right-0 lg:right-1/4 -translate-y-1/2 translate-x-1/4 lg:translate-x-0">
-          <div className="relative w-[300px] h-[300px] lg:w-[450px] lg:h-[450px]">
-            {/* Outer ring */}
-            <div className="absolute inset-0 rounded-full border border-primary/20" />
-            {/* Middle ring with gradient */}
-            <div className="absolute inset-8 rounded-full border-2 border-primary/30" 
-                 style={{ 
-                   background: 'radial-gradient(circle at 30% 30%, rgba(230, 126, 34, 0.1), transparent 70%)'
-                 }} 
-            />
-            {/* Inner ring */}
-            <div className="absolute inset-16 rounded-full border border-primary/20" />
-            
+  const [mounted, setMounted] = useState(false)
 
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  return (
+    <section className="relative min-h-[100dvh] flex items-center overflow-hidden pt-20 lg:pt-0">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
+        
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-[0.015]" 
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }}
+        />
+        
+        {/* Gradient orbs */}
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-primary/8 blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-primary/5 blur-[100px]" />
+        
+        {/* Circular decoration - Desktop */}
+        <div className="hidden lg:block absolute top-1/2 right-[10%] -translate-y-1/2">
+          <div className="relative w-[420px] h-[420px]">
+            {/* Animated rings */}
+            <div className="absolute inset-0 rounded-full border border-primary/10 animate-pulse-glow" />
+            <div className="absolute inset-6 rounded-full border border-primary/15" />
+            <div className="absolute inset-12 rounded-full border border-primary/20" />
+            <div className="absolute inset-20 rounded-full bg-gradient-to-br from-primary/10 to-transparent" />
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           {/* Left Content */}
-          <div className="max-w-xl">
+          <div className={`max-w-xl transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6">
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-8">
               <Star className="w-4 h-4 text-primary fill-primary" />
               <span className="text-sm font-medium text-primary">+2.500 Artistas Verificados</span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6 tracking-tight">
               <span className="text-foreground">O Palco é </span>
-              <span className="text-primary relative">
+              <span className="gradient-text relative inline-block">
                 Seu
-                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 100 12" fill="none">
-                  <path d="M2 10C20 2 80 2 98 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-primary/50"/>
+                <svg className="absolute -bottom-1 left-0 w-full h-3" viewBox="0 0 100 12" fill="none" preserveAspectRatio="none">
+                  <path d="M2 10C20 2 80 2 98 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-primary/40"/>
                 </svg>
               </span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-lg lg:text-xl text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-lg lg:text-xl text-muted-foreground mb-10 leading-relaxed max-w-md">
               Conectamos artistas, técnicos e os melhores equipamentos do mercado para criar experiências{' '}
               <span className="text-foreground font-medium">inesquecíveis</span>.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 mb-14">
               <Link href="/explorar">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 h-12 px-6">
+                <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground gap-2 h-12 px-7 font-medium transition-all hover:scale-[1.02] active:scale-[0.98]">
                   Explorar Marketplace
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="border-border hover:bg-muted-foreground/10 gap-2 h-12 px-6">
+              <Button variant="ghost" size="lg" className="w-full sm:w-auto gap-2 h-12 px-7 text-muted-foreground hover:text-foreground hover:bg-muted/50 font-medium">
                 <Play className="w-4 h-4" />
                 Ver Como Funciona
               </Button>
@@ -79,27 +92,24 @@ export function HeroSection() {
 
             {/* Stats */}
             <div className="flex gap-8 lg:gap-12">
-              <div>
-                <p className="text-3xl lg:text-4xl font-bold text-primary">15k+</p>
-                <p className="text-sm text-muted-foreground">Eventos Realizados</p>
-              </div>
-              <div>
-                <p className="text-3xl lg:text-4xl font-bold text-primary">98%</p>
-                <p className="text-sm text-muted-foreground">Satisfação</p>
-              </div>
-              <div>
-                <p className="text-3xl lg:text-4xl font-bold text-primary">500+</p>
-                <p className="text-sm text-muted-foreground">Cidades</p>
-              </div>
+              {stats.map((stat, i) => (
+                <div key={stat.label} className={`transition-all duration-500 delay-${i * 100} ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+                  <p className="text-3xl lg:text-4xl font-bold text-primary mb-1">{stat.value}</p>
+                  <p className="text-sm text-muted-foreground">{stat.label}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Right Content - Floating Cards (visible on lg+) */}
+          {/* Right Content - Floating Cards */}
           <div className="hidden lg:block relative h-[500px]">
-            {/* Floating category cards */}
-            <div className="absolute top-8 right-8 bg-card border border-border rounded-xl p-4 flex items-center gap-3 shadow-xl animate-float">
-              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                <Mic2 className="w-5 h-5 text-primary" />
+            {/* Card 1 - Top */}
+            <div 
+              className={`absolute top-4 right-20 glass border border-border/50 rounded-2xl p-4 flex items-center gap-4 shadow-2xl card-hover animate-float ${mounted ? 'opacity-100' : 'opacity-0'}`}
+              style={{ animationDelay: '0s', transitionDelay: '200ms' }}
+            >
+              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                <Mic2 className="w-6 h-6 text-primary" />
               </div>
               <div>
                 <p className="font-semibold text-foreground">Cantores</p>
@@ -107,9 +117,13 @@ export function HeroSection() {
               </div>
             </div>
 
-            <div className="absolute top-1/2 right-0 bg-card border border-border rounded-xl p-4 flex items-center gap-3 shadow-xl animate-float" style={{ animationDelay: '0.5s' }}>
-              <div className="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center">
-                <Lightbulb className="w-5 h-5 text-yellow-500" />
+            {/* Card 2 - Middle */}
+            <div 
+              className={`absolute top-1/2 -translate-y-1/2 right-0 glass border border-border/50 rounded-2xl p-4 flex items-center gap-4 shadow-2xl card-hover animate-float ${mounted ? 'opacity-100' : 'opacity-0'}`}
+              style={{ animationDelay: '0.5s', transitionDelay: '400ms' }}
+            >
+              <div className="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center">
+                <Lightbulb className="w-6 h-6 text-yellow-500" />
               </div>
               <div>
                 <p className="font-semibold text-foreground">Iluminação</p>
@@ -117,9 +131,13 @@ export function HeroSection() {
               </div>
             </div>
 
-            <div className="absolute bottom-12 right-12 bg-card border border-border rounded-xl p-4 flex items-center gap-3 shadow-xl animate-float" style={{ animationDelay: '1s' }}>
-              <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                <Speaker className="w-5 h-5 text-primary" />
+            {/* Card 3 - Bottom */}
+            <div 
+              className={`absolute bottom-8 right-16 glass border border-border/50 rounded-2xl p-4 flex items-center gap-4 shadow-2xl card-hover animate-float ${mounted ? 'opacity-100' : 'opacity-0'}`}
+              style={{ animationDelay: '1s', transitionDelay: '600ms' }}
+            >
+              <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                <Speaker className="w-6 h-6 text-primary" />
               </div>
               <div>
                 <p className="font-semibold text-foreground">Equipamentos</p>
@@ -129,7 +147,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-
     </section>
   )
 }

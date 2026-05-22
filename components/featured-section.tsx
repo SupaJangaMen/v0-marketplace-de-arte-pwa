@@ -1,5 +1,7 @@
+'use client'
+
 import Link from 'next/link'
-import { Star, MapPin, CheckCircle } from 'lucide-react'
+import { Star, MapPin, CheckCircle, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
@@ -86,46 +88,50 @@ const featuredServices = [
 
 export function FeaturedSection() {
   return (
-    <section className="py-20 lg:py-32 bg-secondary/30">
+    <section className="py-24 lg:py-32 bg-gradient-to-b from-muted/30 via-muted/50 to-muted/30">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-12">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
           <div>
-            <p className="text-primary font-medium mb-3">Destaques</p>
-            <h2 className="text-3xl lg:text-4xl font-bold text-foreground text-balance">
+            <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase mb-4">Destaques</span>
+            <h2 className="text-3xl lg:text-5xl font-bold text-foreground tracking-tight text-balance">
               Profissionais em Alta
             </h2>
           </div>
           <Link href="/explorar">
-            <Button variant="outline" className="border-border hover:bg-secondary">
+            <Button variant="outline" className="border-border/50 hover:border-border hover:bg-muted/50 gap-2 group">
               Ver todos
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {featuredServices.map((service) => (
             <Link
               key={service.id}
               href={`/servico/${service.id}`}
-              className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300"
+              className="group bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden card-hover"
             >
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
                 <img
                   src={service.image}
                   alt={service.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute top-3 left-3">
-                  <Badge className="bg-background/90 text-foreground backdrop-blur-sm">
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                <div className="absolute top-4 left-4">
+                  <Badge className="bg-background/90 text-foreground backdrop-blur-sm border-0 font-medium">
                     {service.category}
                   </Badge>
                 </div>
                 {service.verified && (
-                  <div className="absolute top-3 right-3">
-                    <div className="bg-primary text-primary-foreground rounded-full p-1">
+                  <div className="absolute top-4 right-4">
+                    <div className="bg-primary text-primary-foreground rounded-full p-1.5 shadow-lg">
                       <CheckCircle className="w-4 h-4" />
                     </div>
                   </div>
@@ -133,39 +139,43 @@ export function FeaturedSection() {
               </div>
 
               {/* Content */}
-              <div className="p-5">
-                <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="p-6">
+                <div className="flex items-start justify-between gap-3 mb-3">
                   <div>
-                    <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
                       {service.name}
                     </h3>
-                    <p className="text-sm text-muted-foreground">{service.type}</p>
+                    <p className="text-sm text-muted-foreground mt-0.5">{service.type}</p>
                   </div>
-                  <div className="flex items-center gap-1 bg-secondary rounded-lg px-2 py-1">
+                  <div className="flex items-center gap-1.5 bg-muted/50 rounded-lg px-2.5 py-1.5 shrink-0">
                     <Star className="w-4 h-4 text-primary fill-primary" />
-                    <span className="text-sm font-medium">{service.rating}</span>
+                    <span className="text-sm font-semibold">{service.rating}</span>
                     <span className="text-xs text-muted-foreground">({service.reviews})</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
-                  <MapPin className="w-4 h-4" />
-                  {service.location}
+                <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-4">
+                  <MapPin className="w-4 h-4 shrink-0" />
+                  <span>{service.location}</span>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-5">
                   {service.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs bg-secondary text-secondary-foreground px-2 py-1 rounded-md"
+                      className="text-xs bg-muted/50 text-muted-foreground px-2.5 py-1 rounded-full"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <div className="pt-4 border-t border-border">
+                <div className="pt-5 border-t border-border/50 flex items-center justify-between">
                   <p className="text-sm text-muted-foreground">{service.price}</p>
+                  <span className="text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                    Ver perfil
+                    <ArrowRight className="w-3 h-3" />
+                  </span>
                 </div>
               </div>
             </Link>
